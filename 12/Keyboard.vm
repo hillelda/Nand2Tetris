@@ -1,0 +1,118 @@
+//	<classVarDec>
+//	</classVarDec>
+//	<subroutineDec>
+//	<parameterList>
+//	<subroutineBody>
+function Keyboard.init 0
+push constant 24576
+pop static 0
+push constant 0
+return
+//			<subroutineDec>
+//			<parameterList>
+//			<subroutineBody>
+function Keyboard.keyPressed 0
+push static 0
+call Memory.peek 1
+return
+//						<subroutineDec>
+//						<parameterList>
+//						<subroutineBody>
+//							<varDec>
+//							</varDec>
+function Keyboard.readChar 1
+label Keyboard.WHILE0
+call Keyboard.keyPressed 0
+push constant 0
+eq
+not
+if-goto Keyboard.END_WHILE0
+goto Keyboard.WHILE0
+label Keyboard.END_WHILE0
+call Keyboard.keyPressed 0
+pop local 0
+label Keyboard.WHILE1
+call Keyboard.keyPressed 0
+push constant 0
+eq
+not
+not
+if-goto Keyboard.END_WHILE1
+goto Keyboard.WHILE1
+label Keyboard.END_WHILE1
+push local 0
+call Output.printChar 1
+pop temp 0
+push local 0
+return
+//													<subroutineDec>
+//													<parameterList>
+//													<subroutineBody>
+//														<varDec>
+//														</varDec>
+//														<varDec>
+//														</varDec>
+function Keyboard.readLine 2
+push constant 64
+call String.new 1
+pop local 0
+push argument 0
+call Output.printString 1
+pop temp 0
+label Keyboard.WHILE2
+push constant 1
+neg
+not
+if-goto Keyboard.END_WHILE2
+call Keyboard.readChar 0
+pop local 1
+push local 1
+call String.newLine 0
+eq
+not
+if-goto Keyboard.ELSE3
+call Output.println 0
+pop temp 0
+push local 0
+return
+goto Keyboard.END_IF3
+label Keyboard.ELSE3
+label Keyboard.END_IF3
+push local 1
+call String.backSpace 0
+eq
+push local 0
+call String.length 1
+push constant 0
+gt
+and 
+not
+if-goto Keyboard.ELSE4
+call Output.backSpace 0
+pop temp 0
+push local 0
+call String.eraseLastChar 1
+pop temp 0
+goto Keyboard.END_IF4
+label Keyboard.ELSE4
+push local 0
+push local 1
+call String.appendChar 2
+pop temp 0
+label Keyboard.END_IF4
+goto Keyboard.WHILE2
+label Keyboard.END_WHILE2
+push local 0
+return
+//																										<subroutineDec>
+//																										<parameterList>
+//																										<subroutineBody>
+//																											<varDec>
+//																											</varDec>
+function Keyboard.readInt 1
+push argument 0
+call Keyboard.readLine 1
+pop local 0
+push local 0
+call String.intValue 1
+return

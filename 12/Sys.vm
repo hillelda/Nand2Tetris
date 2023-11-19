@@ -1,0 +1,98 @@
+//	<subroutineDec>
+//	<parameterList>
+//	<subroutineBody>
+function Sys.init 0
+call Memory.init 0
+pop temp 0
+call Keyboard.init 0
+pop temp 0
+call Math.init 0
+pop temp 0
+call Output.init 0
+pop temp 0
+call Screen.init 0
+pop temp 0
+call Main.main 0
+pop temp 0
+call Sys.halt 0
+pop temp 0
+push constant 0
+return
+//		<subroutineDec>
+//		<parameterList>
+//		<subroutineBody>
+function Sys.halt 0
+label Sys.WHILE0
+push constant 1
+neg
+not
+if-goto Sys.END_WHILE0
+goto Sys.WHILE0
+label Sys.END_WHILE0
+push constant 0
+return
+//				<subroutineDec>
+//				<parameterList>
+//				<subroutineBody>
+//					<varDec>
+//					</varDec>
+function Sys.wait 2
+push constant 0
+pop local 0
+label Sys.WHILE1
+push local 0
+push argument 0
+lt
+not
+if-goto Sys.END_WHILE1
+push constant 0
+pop local 1
+label Sys.WHILE2
+push local 1
+push constant 9
+lt
+not
+if-goto Sys.END_WHILE2
+push local 1
+push constant 1
+add
+pop local 1
+goto Sys.WHILE2
+label Sys.END_WHILE2
+push local 0
+push constant 1
+add
+pop local 0
+goto Sys.WHILE1
+label Sys.END_WHILE1
+push constant 0
+return
+//											<subroutineDec>
+//											<parameterList>
+//											<subroutineBody>
+function Sys.error 0
+push constant 3
+call String.new 1
+pop temp 0
+push temp 0
+push constant 69
+call String.appendChar 2
+pop temp 0
+push temp 0
+push constant 114
+call String.appendChar 2
+pop temp 0
+push temp 0
+push constant 114
+call String.appendChar 2
+pop temp 0
+push temp 0
+call Output.printString 1
+pop temp 0
+push argument 0
+call Output.printInt 1
+pop temp 0
+call Sys.halt 0
+pop temp 0
+push constant 0
+return

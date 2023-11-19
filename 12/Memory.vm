@@ -1,0 +1,272 @@
+//	<classVarDec>
+//	</classVarDec>
+//	<classVarDec>
+//	</classVarDec>
+//	<subroutineDec>
+//	<parameterList>
+//	<subroutineBody>
+function Memory.init 0
+push constant 0
+pop static 0
+push constant 2048
+pop static 1
+push static 1
+push constant 0
+add
+push constant 16384
+push constant 2048
+sub
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push static 1
+push constant 1
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 0
+return
+//								<subroutineDec>
+//								<parameterList>
+//								<subroutineBody>
+function Memory.peek 0
+push static 0
+push argument 0
+add
+pop pointer 1
+push that 0
+return
+//											<subroutineDec>
+//											<parameterList>
+//											<subroutineBody>
+function Memory.poke 0
+push static 0
+push argument 0
+add
+push argument 1
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 0
+return
+//														<subroutineDec>
+//														<parameterList>
+//														<subroutineBody>
+//															<varDec>
+//															</varDec>
+//															<varDec>
+//															</varDec>
+//															<varDec>
+//															</varDec>
+function Memory.alloc 3
+push static 1
+push constant 1
+add
+pop local 2
+push constant 0
+pop local 1
+label Memory.WHILE0
+push local 2
+push constant 0
+eq
+not
+not
+if-goto Memory.END_WHILE0
+push local 2
+push constant 1
+neg
+add
+pop pointer 1
+push that 0
+push argument 0
+gt
+not
+if-goto Memory.ELSE1
+push local 2
+push constant 1
+neg
+add
+pop pointer 1
+push that 0
+push argument 0
+sub
+push constant 3
+lt
+not
+if-goto Memory.ELSE2
+push local 1
+push constant 0
+eq
+not
+not
+if-goto Memory.ELSE3
+push local 1
+push constant 0
+add
+push local 2
+push constant 0
+add
+pop pointer 1
+push that 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+goto Memory.END_IF3
+label Memory.ELSE3
+push local 2
+push constant 0
+add
+pop pointer 1
+push that 0
+pop static 1
+label Memory.END_IF3
+push local 2
+return
+goto Memory.END_IF2
+label Memory.ELSE2
+label Memory.END_IF2
+push local 2
+push constant 1
+neg
+add
+push local 2
+push constant 1
+neg
+add
+pop pointer 1
+push that 0
+push argument 0
+push constant 1
+add
+sub
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 2
+push local 2
+push constant 1
+neg
+add
+pop pointer 1
+push that 0
+push constant 1
+sub
+add
+push argument 0
+push constant 1
+add
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 2
+push local 2
+push constant 1
+neg
+add
+pop pointer 1
+push that 0
+add
+return
+goto Memory.END_IF1
+label Memory.ELSE1
+push local 2
+pop local 1
+push local 2
+push constant 0
+add
+pop pointer 1
+push that 0
+push constant 1
+add
+pop local 2
+label Memory.END_IF1
+goto Memory.WHILE0
+label Memory.END_WHILE0
+push constant 1
+neg
+return
+//																																												<subroutineDec>
+//																																												<parameterList>
+//																																												<subroutineBody>
+//																																													<varDec>
+//																																													</varDec>
+function Memory.deAlloc 1
+push argument 0
+push constant 1
+sub
+pop local 0
+push local 0
+push constant 1
+add
+push static 1
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 0
+pop static 1
+push constant 0
+return
+//																																																	<subroutineDec>
+//																																																	<parameterList>
+//																																																	<subroutineBody>
+//																																																		<varDec>
+//																																																		</varDec>
+//																																																		<varDec>
+//																																																		</varDec>
+function Memory.max 2
+push argument 0
+push constant 1
+neg
+add
+pop pointer 1
+push that 0
+push constant 1
+sub
+pop local 0
+push argument 0
+push constant 0
+add
+pop pointer 1
+push that 0
+pop local 1
+label Memory.WHILE6
+push local 0
+push constant 1
+gt
+not
+if-goto Memory.END_WHILE6
+push argument 0
+push local 0
+add
+pop pointer 1
+push that 0
+push local 1
+gt
+not
+if-goto Memory.ELSE7
+push argument 0
+push local 0
+add
+pop pointer 1
+push that 0
+pop local 1
+goto Memory.END_IF7
+label Memory.ELSE7
+label Memory.END_IF7
+push local 0
+push constant 1
+sub
+pop local 0
+goto Memory.WHILE6
+label Memory.END_WHILE6
+push local 1
+return

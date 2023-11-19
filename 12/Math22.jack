@@ -1,0 +1,204 @@
+// This file is part of nand2tetris, as taught in The Hebrew University, and
+// was written by Aviv Yaish. It is an extension to the specifications given
+// [here](https://www.nand2tetris.org) (Shimon Schocken and Noam Nisan, 2017),
+// as allowed by the Creative Common Attribution-NonCommercial-ShareAlike 3.0
+// Unported [License](https://creativecommons.org/licenses/by-nc-sa/3.0/).
+
+/**
+ * A library of commonly used mathematical functions.
+ * Note: Jack compilers implement multiplication and division using OS method calls.
+ */
+class Math {
+        /** Initializes the library. */
+        static Array powerOf2;
+        static int divideMult;
+
+        function void init() {
+            let powerOf2 = Array.new(16);
+            let powerOf2[0] = 1;
+            let powerOf2[1] = 2;
+            let powerOf2[2] = 4;
+            let powerOf2[3] = 8;
+            let powerOf2[4] = 16;
+            let powerOf2[5] = 32;
+            let powerOf2[6] = 64;
+            let powerOf2[7] = 128;
+            let powerOf2[8] = 256;
+            let powerOf2[9] = 512;
+            let powerOf2[10] = 1024;
+            let powerOf2[11] = 2048;
+            let powerOf2[12] = 4096;
+            let powerOf2[13] = 8192;
+            let powerOf2[14] = 16384;
+            let powerOf2[15] = 16384 + 16384;
+            return;
+        }
+
+
+        function int power2(int i){
+            return powerOf2[i];
+        }
+        /** 
+         * Returns the product of x and y. 
+         * When a Jack compiler detects the multiplication operator '*' in the 
+         * program's code, it handles it by invoking this method. In other words,
+         * the Jack expressions x*y and multiply(x,y) return the same value.
+         */
+        function int multiply(int x, int y) {
+            // Pseudocode:
+            // 1. let sum = 0
+            // 2. let shiftedx = x
+            // 3. for i = 0 ... n-1 do
+            // 4.   if ((i-th bit of y) == 1)
+            // 5.      let sum = sum + shiftedx
+            // 6.   let shiftedx = 2*shiftedx
+            // 7. return sum
+            var int sum;
+            var int shiftedX;
+            var int i;
+
+            let sum = 0;
+            let shiftedX = x;
+            let i = 0;
+            
+            while(i < 16){
+                if(Math.bit(y,i) = 1){
+                    let sum = sum + shiftedX;
+                }
+                let shiftedX = shiftedX + shiftedX;
+                let i = i + 1;
+            }
+            return sum;
+        }
+
+        function int bit(int y, int i)
+        {
+            if ((y & powerOf2[i]) = 0)
+            {
+                return 0;
+            }
+            return 1;
+        }
+
+        /** 
+         * Returns the integer part of x/y.
+         * When a Jack compiler detects the multiplication operator '/' in the 
+         * program's code, it handles it by invoking this method. In other words,
+         * the Jack expressions x/y and divide(x,y) return the same value.
+         */
+        function int divide(int x, int y) {
+            // This should be implemented without using multiplication.
+            // Hint: updating the value of 2*q*y in the "if" statement requires
+            // at most a single addition operator at every recursion step.
+            // Pseudocode:
+            // 1. if (y > x) return 0
+            // 2. let q = divide(x, 2*y)
+            // 3. if ((x - 2*q*y) < y)
+            // 4.   return 2*q
+            // 5. else
+            // 6.   return 2*q + 1
+
+            var int sign;
+            var int value;
+            let sign = 1;
+
+            if(((x > 0) & (y < 0)) | ((x < 0) & (y > 0)) )
+            {
+                let sign = -1;
+            }
+
+            let x = Math.abs(x);
+            let y = Math.abs(y);
+
+            let divideMult = 0;
+            let value = Math.divideFunc(x,y);
+
+            if(sign = -1){
+                let value = -value;
+            }
+            return value;
+        }
+
+        function int divideFunc(int x, int y){
+            var int q;
+
+            if((y > x) | (y<0)){
+                return 0;
+            }
+
+            let q = Math.divideFunc(x, y + y);
+
+            // divideMult = (y + y) * q or (q + q) * y
+            if ((x - divideMult) < y){
+                return (q + q);
+            }
+            else
+            {
+                let divideMult = divideMult + y;
+                return (q + q + 1);
+            }
+        }
+
+        /** Returns the integer part of the square root of x. */
+        function int sqrt(int x) {
+            // This should be implemented without using division.
+            // Pseudocode (where '**' is the mathematical power function):
+            // 1. let y = 0
+            // 2. for j = (n/2 - 1) ... 0 do
+            // 3.   if ((y + 2**j)**2 <= x) then let y = y + 2**j
+            // 4. return y
+            var int y;
+            var int j;
+            var int temp;
+            var int multY
+
+            let y = 0;
+            let j = 7;
+
+            while(j > -1)
+            {
+
+                let
+                let temp = (y + powerOf2[j]) * (y + powerOf2[j]); // MULT - with shifts.
+                if (~(temp > x))
+                {
+                        if(temp > 0){
+                            let y = y + powerOf2[j];
+                        }
+                }
+                let j = j - 1;
+            }
+            return y;
+        }
+
+        /** Returns the greater number. */
+        function int max(int a, int b) {
+
+            if (a < b)
+            {
+                return b;
+            }
+            return a;
+        }
+
+        /** Returns the smaller number. */
+        function int min(int a, int b) {
+            if(a < b)
+            {
+                return a;
+            }
+            return b;
+        }
+
+
+        /** Returns the absolute value of x. */
+        function int abs(int x) {
+            if(x < 0){
+                return -x;
+            }
+            return x;
+        }
+
+
+    }
+
